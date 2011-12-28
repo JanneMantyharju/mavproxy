@@ -1,0 +1,2 @@
+ACTION=="add", KERNEL=="ttyUSB0", RUN="/lib/udev/nettitikku"
+

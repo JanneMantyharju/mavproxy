@@ -1,0 +1,17 @@
+exec chat                                               \
+        TIMEOUT         5                               \
+        ECHO            ON                              \
+        ABORT           '\nBUSY\r'                      \
+        ABORT           '\nERROR\r'                     \
+        ABORT           '\nNO ANSWER\r'                 \
+        ABORT           '\nNO CARRIER\r'                \
+        ABORT           '\nNO DIALTONE\r'               \
+        ABORT           '\nRINGING\r\n\r\nRINGING\r'    \
+        ''              AT                              \
+        OK              ATH                             \
+        OK              ATE1                            \
+        OK              'AT+CGDCONT=1,"IP","internet","0.0.0.0",0,0' \
+        OK              ATD*99#                         \
+        TIMEOUT         22                              \
+        CONNECT         ""
+

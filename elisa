@@ -1,0 +1,88 @@
+# Most GPRS phones don't reply to LCP echo's
+lcp-echo-failure 0
+lcp-echo-interval 0
+
+# Keep pppd attached to the terminal:
+# Comment this to get daemon mode pppd
+nodetach
+
+# Debug info from pppd:
+# Comment this off, if you don't need more info
+debug
+
+# Show password in debug messages
+show-password
+
+# Connect script:
+# scripts to initialize the GPRS modem and start the connection,
+connect /etc/ppp/elisa-connect-chat
+
+# Disconnect script:
+# AT commands used to 'hangup' the GPRS connection.
+disconnect /etc/ppp/elisa-disconnect-chat
+
+# Serial device to which the GPRS phone is connected: 
+/dev/ttyUSB0    # USB
+#/dev/ttyACM0    # Data cable device file
+#/dev/rfcomm0    # Bluetooth device file
+
+# Serial port line speed
+460800   # fast enough
+#57600
+
+# Hardware flow control:
+# Use hardware flow control with cable, Bluetooth and USB but not with IrDA.
+crtscts  # serial cable, Bluetooth and USB, on some occations with IrDA too
+#nocrtscts # IrDA
+
+# Ignore carrier detect signal from the modem:
+local
+
+# IP addresses:
+# - accept peers idea of our local address and set address peer as 10.0.0.1
+# (any address would do, since IPCP gives 0.0.0.0 to it)
+# - if you use the 10. network at home or something and pppd rejects it,
+# change the address to something else
+0.0.0.0:0.0.0.0
+
+# pppd must not propose any IP address to the peer!
+noipdefault
+
+# Accept peers idea of our local address
+ipcp-accept-local
+
+# Add the ppp interface as default route to the IP routing table
+defaultroute
+
+# DNS servers from the phone:
+# some phones support this, some don't.
+usepeerdns
+# ppp compression:
+# ppp compression may be used between the phone and the pppd, but the
+# serial connection is usually not the bottleneck in GPRS, so the
+# compression is useless (and with some phones need to disabled before
+# the LCP negotiations succeed).
+novj
+nobsdcomp
+novjccomp
+nopcomp
+noaccomp
+noccp
+
+# The phone is not required to authenticate:
+noauth
+
+# Username and password:
+# If username and password are required by the APN, put here the username
+# and put the username-password combination to the secrets file:
+# /etc/ppp/pap-secrets for PAP and /etc/ppp/chap-secrets for CHAP
+# authentication. See pppd man pages for details.
+user "rlnet"
+password "internet"
+
+#
+mtu 1500
+mru 1500
+
+asyncmap 0xa0000
+

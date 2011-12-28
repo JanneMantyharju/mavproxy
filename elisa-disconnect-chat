@@ -1,0 +1,8 @@
+exec /usr/sbin/chat -V -s -S \
+ABORT "BUSY" \
+ABORT "ERROR" \
+ABORT "NO DIALTONE" \
+SAY "\nSending break to the modem\n" \
+"" "K" "" "K" "" "K" "" \
+"+++ATH" "" "+++ATH" "" "+++ATH"
+
